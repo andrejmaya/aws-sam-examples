@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:          
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src
+      Handler: app.lambda_handler
+      Runtime: python2.7
+      Events:
+        HelloWorld:
+            Type: Api
+            Properties:
+                Path: /hello
+                Method: post             
+  SesForwarderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src
+      Handler: SesForwarder.lambda_handler
+      Runtime: nodejs6.10
+      Policies:
+      - AWSLambdaExecute 
+      - Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:PutObject
+            Resource: 'arn:aws:s3:::*'
+  SendEmailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src
+      Handler: SendEmail.lambda_handler
+      Runtime: python2.7
+      Policies:
+      - AWSLambdaExecute # Managed Policy
+      - Version: '2012-10-17' # Policy Document
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents           
+              - ses:SendEmail
+              - ses:SendRawEmail
+            Resource: '*'      
+      Events:
+        SendEmail:
+            Type: Api
+            Properties:
+                Path: /mail
+                Method: post                
