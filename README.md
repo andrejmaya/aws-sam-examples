@@ -6,12 +6,12 @@ This repository contain following SAM based functions:
 * SendEmail: sending Email with Lambda and API Gateway
 
 ## Usage
-* Create a S3 bucket: `aws s3 mb s3://$YOUR_SAM_PROJ_NAME`
+* Create a S3 bucket: `aws s3 mb s3://$S3_BUCKET`
 * Build project: see `build` in `buildspec.yml`
 * Deploy:
 
 ```
-aws cloudformation deploy --template-file ./serverless-output.yaml --stack-name $YOUR_SAM_PROJ_NAME --capabilities=CAPABILITY_IAM
+aws cloudformation deploy --template-file ./serverless-output.yaml --stack-name $S3_BUCKET --capabilities=CAPABILITY_IAM
 ```
 
 ## Test Lambda locally 

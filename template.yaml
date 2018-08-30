@@ -6,22 +6,25 @@ Resources:
     Properties:
       CodeUri: ./src
       Handler: app.lambda_handler
-      Runtime: python2.7
-      Policies:
-      - AWSLambdaExecute 
-      - Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - s3:GetObject
-              - s3:PutObject
-            Resource: 'arn:aws:s3:::*'      
+      Runtime: python2.7      
       Events:
         HelloWorld:
             Type: Api
             Properties:
                 Path: /hello
-                Method: get             
+                Method: get  
+  ContactFormFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src
+      Handler: contactForm.lambda_html_handler
+      Runtime: python2.7      
+      Events:
+        ContactForm:
+            Type: Api
+            Properties:
+                Path: /contact
+                Method: get                             
   SesForwarderFunction:
     Type: AWS::Serverless::Function
     Properties:
