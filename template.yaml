@@ -12,7 +12,7 @@ Resources:
             Type: Api
             Properties:
                 Path: /hello
-                Method: post             
+                Method: get             
   SesForwarderFunction:
     Type: AWS::Serverless::Function
     Properties:
